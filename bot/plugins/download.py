@@ -46,7 +46,7 @@ def _download(client, message):
         sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
 
 
-@Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
+@Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo | filters.all) & CustomFilters.auth_users)
 def _telegram_file(client, message):
   print(message)
   user_id = message.from_user.id
