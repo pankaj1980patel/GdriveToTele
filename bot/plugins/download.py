@@ -48,6 +48,7 @@ def _download(client, message):
 
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 def _telegram_file(client, message):
+  print(message)
   user_id = message.from_user.id
   sent_message = message.reply_text('🕵️**Checking File...**', quote=True)
   if message.document:
@@ -74,6 +75,7 @@ def _telegram_file(client, message):
 
 @Client.on_message(filters.incoming & filters.private & filters.command(BotCommands.YtDl) & CustomFilters.auth_users)
 def _ytdl(client, message):
+
   user_id = message.from_user.id
   if len(message.command) > 1:
     sent_message = message.reply_text('🕵️**Checking Link...**', quote=True)

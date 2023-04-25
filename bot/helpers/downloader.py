@@ -1,4 +1,5 @@
 import os
+import time
 import wget
 import glob
 import youtube_dl
@@ -10,10 +11,20 @@ from bot import DOWNLOAD_DIRECTORY, LOGGER
 
 def download_file(url, dl_path):
   try:
-    dl = SmartDL(url, dl_path, progress_bar=False)
+    dl = SmartDL(url, dl_path, progress_bar=True)
     LOGGER.info(f'Downloading: {url} in {dl_path}')
     dl.start()
+    while not dl.isFinished():
+        print("Speed: %s" % dl.get_speed(human=True))
+        print("Already downloaded: %s" % dl.get_dl_size(human=True))
+        print("Eta: %s" % dl.get_eta(human=True))
+        print("Progress: %d%%" % (dl.get_progress()*100))
+        print("Progress bar: %s" % dl.get_progress_bar())
+        print("Status: %s" % dl.get_status())
+        print("\n"*2+"="*50+"\n"*2)
+        time.sleep(0.2)
     return True, dl.get_dest()
+  
   except HTTPError as error:
     return False, error
   except Exception as error:
